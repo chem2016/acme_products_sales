@@ -1,0 +1,47 @@
+const express = require('express');
+const app = express();
+const path = require('path');
+const { syncAndSeed, Product } = require('./db')
+const bodyParser = require('body-parser')
+
+const port = process.env.PORT || 3000;
+
+// app.use(bodyParser.urlencoded( { extended: true } ))
+app.use(bodyParser.json())
+app.get('/app.js', (req, res, next)=> res.sendFile(path.join(__dirname, '../dist', 'main.js')));
+
+app.get('/', (req, res, next)=> res.sendFile(path.join(__dirname, '../index.html')));
+
+app.get('/api/products',(req, res, next)=>{
+    Product.findAll({
+    })
+    .then( products => res.send(products))
+    .catch(next)
+})
+
+// need work
+app.post('/api/products',(req, res, next)=>{
+    console.log("req.body.name", req.body.name)
+    Product.create(
+        {
+            name: req.body.name,
+            price: req.body.price,
+            discount: req.body.discount,
+            availability: req.body.availability,
+        }
+    )
+    .then(product=> res.send(product))
+    .catch(err=>console.log(err))
+})
+
+app.delete('/api/products/:id',(req, res, next)=>{
+    Product.destory({
+        where: {
+            id: req.params.id
+        }
+    })
+})
+
+syncAndSeed()
+    .then(()=>{app.listen(port, ()=> console.log(`listening on port ${port}`))})
+
