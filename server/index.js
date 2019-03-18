@@ -31,15 +31,17 @@ app.post('/api/products',(req, res, next)=>{
         }
     )
     .then(product=> res.send(product))
-    .catch(err=>console.log(err))
+    .catch(next)
 })
 
 app.delete('/api/products/:id',(req, res, next)=>{
-    Product.destory({
+    console.log('delete', req.params.id)
+    Product.destroy({
         where: {
             id: req.params.id
         }
     })
+    .catch(next)
 })
 
 syncAndSeed()

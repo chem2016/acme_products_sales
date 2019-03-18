@@ -8,8 +8,8 @@ const Nav = (props) =>{
     const saleCount = props.saleCount
     const links = [
         {id: 1, name: 'Home', address: '/'},
-        {id: 2, name: 'Products', address: '/products', count: 3},
-        {id: 3, name: 'Sales', address: '/products/sales', count: 3},
+        {id: 2, name: 'Products', address: '/products', count: productCount},
+        {id: 3, name: 'Sales', address: '/products/sales', count: saleCount},
         {id: 4, name: 'Create', address: '/products/create'},
     ]
     return (

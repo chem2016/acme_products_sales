@@ -13,6 +13,7 @@ class App extends Component{
             products: [],
             err: '',
         }
+        this.deleteProduct = this.deleteProduct.bind(this)
     }
 
     componentDidMount(){
@@ -24,16 +25,29 @@ class App extends Component{
 
 
     // only need this function when the form and listing are on the same page using different states
-    // addProduct = (product) => {
-    //     this.setState( prevState => ({
-    //         ...prevState,
-    //         products: [...prevState.products, product]
-    //       }))
+    addProduct = (product) => {
+        this.setState( prevState => ({
+            ...prevState,
+            products: [...prevState.products, product]
+          }))
+    }
+
+    // deleteProduct = async(id) => {
+    //     const res = await axios.delete(`/api/products/${id}`)
+    //     const currentProducts = this.state.products
+    //     const nextProducts = currentProducts.filter((product)=>{
+    //         return product.id !== id
+    //     })
+    //     this.setState({ products: nextProducts })
     // }
 
-    deleteProduct = () => {
+    async deleteProduct (productId) {
+        await axios.delete(`/api/products/${productId}`)
+        this.setState({
+            products: this.state.products.filter(product => product.id !== productId)
+        })
+      }
 
-    }
 
     render(){
         const {products} = this.state
@@ -48,14 +62,23 @@ class App extends Component{
                 {/* <Route component={Nav} /> */}
                 <Route render={({location})=><Nav 
                     location={location} 
-                    // productCount={products.length}
-                    // saleCount={sales.length}
+                    productCount={products.length}
+                    saleCount={sales.length}
                     />}/>
                 <Switch>
                     <Route exact path='/' render = { () => <Home />}/>
-                    <Route exact path='/products' render = { () => <Products products={products}/>}/>
-                    <Route exact path='/products/sales' render = { () => <Products products={sales} />}/>
-                    <Route exact path='/products/create' render = { () => <CreateProduct addProduct={this.addProduct}/>}/>
+                    <Route exact path='/products' render = { () => <Products 
+                        products={products} 
+                        deleteProduct={id=>this.deleteProduct(id)}
+                        />}/>
+                    <Route exact path='/products/sales' render = { () => <Products 
+                        products={sales} 
+                        deleteProduct={this.deleteProduct}
+                        />}/>
+                    <Route exact path='/products/create' render = { ({history}) => <CreateProduct 
+                        history={history}
+                        addProduct={product=>this.addProduct(product)}
+                        />}/>
                 </Switch>
             </div>
             </Router>

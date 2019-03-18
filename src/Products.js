@@ -16,6 +16,10 @@ const Products = (props) =>{
                             {/* </span> */}
                             {`$${product.price * product.discount}`}<br/>
                             {product.availability}<br/>
+                            {
+                                props.deleteProduct && 
+                                <button className='remove' onClick={()=>{props.deleteProduct(product.id)}}>Delete</button>
+                            }
                         </li>
                     )
                 })

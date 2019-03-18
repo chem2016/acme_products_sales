@@ -22,7 +22,14 @@ class CreateProduct extends Component {
             availability,
         })
             .then(response => response.data)
-            // .then((product)=>{this.props.addProduct(product)})
+            .then(product => {
+                this.props.addProduct(product)
+                if(product.discount){
+                    this.props.history.push('/products/sales')
+                }else{
+                    this.props.history.push('/products')
+                }
+            })
             .catch(err=>console.log(err))
     }
 
@@ -68,14 +75,10 @@ class CreateProduct extends Component {
                     <option value="discontinued">discontinued</option>
                 </select>   
                 <br/>
-
                 <button type='submit'>Create</button>
             </form>
         )
     }
 }
-
-
-
 
 export default CreateProduct
