@@ -6,7 +6,7 @@ class CreateProduct extends Component {
         super()
         this.state = {
             name: '',
-            price: 0,
+            price: '',
             discount: 0,
             availability: 'instock',   
         }

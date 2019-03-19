@@ -41,7 +41,7 @@ app.delete('/api/products/:id',(req, res, next)=>{
             id: req.params.id
         }
     })
-    .then(() => res.status(204).end()) // ??HY why end()?
+    .then(() => res.sendStatus(204)) // ??HY why end()?
     // .then(()=> console.log('hELLO'))
     .catch(next)
 })
