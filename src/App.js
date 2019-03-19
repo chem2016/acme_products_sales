@@ -32,15 +32,6 @@ class App extends Component{
           }))
     }
 
-    // deleteProduct = async(id) => {
-    //     const res = await axios.delete(`/api/products/${id}`)
-    //     const currentProducts = this.state.products
-    //     const nextProducts = currentProducts.filter((product)=>{
-    //         return product.id !== id
-    //     })
-    //     this.setState({ products: nextProducts })
-    // }
-
     async deleteProduct (productId) {
         await axios.delete(`/api/products/${productId}`)
         this.setState({
@@ -77,7 +68,7 @@ class App extends Component{
                         />}/>
                     <Route exact path='/products/create' render = { ({history}) => <CreateProduct 
                         history={history}
-                        addProduct={product=>this.addProduct(product)}
+                        addProduct={this.addProduct}   //??HY how to pass this func
                         />}/>
                 </Switch>
             </div>

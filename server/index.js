@@ -21,7 +21,7 @@ app.get('/api/products',(req, res, next)=>{
 
 // need work
 app.post('/api/products',(req, res, next)=>{
-    console.log("req.body.name", req.body.name)
+    //console.log("req.body.name", req.body.name)
     Product.create(
         {
             name: req.body.name,
@@ -41,6 +41,8 @@ app.delete('/api/products/:id',(req, res, next)=>{
             id: req.params.id
         }
     })
+    .then(() => res.status(204).end()) // ??HY why end()?
+    // .then(()=> console.log('hELLO'))
     .catch(next)
 })
 
